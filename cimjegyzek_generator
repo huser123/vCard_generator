@@ -1,0 +1,28 @@
+#!/bin/bash
+
+max=0
+be1=0
+be2=0
+
+for nevek in $(cat nevek.txt | tr " " ++)
+do
+    ((be1++))
+    tombnevek[be1]=$nevek
+    ((max++))
+done
+
+for cimek in $(cat email.txt)
+do
+    ((be2++))
+    tombcimek[be2]=$cimek
+done
+
+for i in $(seq 1 $max)
+do
+    echo "begin:vcard" >> cimjegyzek.vcf
+    echo "fn;quoted-printable:"${tombnevek[i]} | tr ++ " " >> cimjegyzek.vcf
+    echo "email;internet:"${tombcimek[i]} >> cimjegyzek.vcf
+    echo "version:2.1" >> cimjegyzek.vcf
+    echo "end:vcard" >> cimjegyzek.vcf
+    echo >> cimjegyzek.vcf
+done
